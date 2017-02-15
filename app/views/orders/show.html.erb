@@ -1,0 +1,21 @@
+<style type="text/css">
+    .bordered-span {
+        text-align:center;
+        border:1px solid #c0c0c0;
+        background:#f5f5f5;
+        padding:4px;
+        position:relative; /* ie6 border fix*/
+    }
+</style>
+
+<p id="notice"><%= notice %></p>
+
+<% @order.line_items.each do |li| %>
+    <p>
+        <strong>Item:</strong> <span class="bordered-span"><%= li.item %></span>
+        <strong>Quantity:</strong> <span class="bordered-span"><%= li.quantity %></span>
+        <strong>Gift Wrap Type:</strong>  <span class="bordered-span"><%= li.gift_wrap_type %></span>
+    </p>
+<% end %>
+<%= link_to 'Edit', edit_order_path(@order) %> |
+<%= link_to 'Back', orders_path %>

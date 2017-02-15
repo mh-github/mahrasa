@@ -1,0 +1,161 @@
+<style>
+	.dropdown1 {
+		position: relative;
+		width: 200px;
+	}
+	.dropdown1 select
+	{
+		width: 100%;
+	}
+	.dropdown1 > * {
+		box-sizing: border-box;
+		height: 1.5em;
+	}
+	.dropdown1 select {
+	}
+	.dropdown1 input {
+		position: absolute;
+		width: calc(100% - 20px);
+	}
+
+</style>
+
+<script type="text/javascript">
+
+    function updateSelectValue() {
+        this.previousElementSibling.value = this.value;
+        this.previousElementSibling.focus();
+    }
+
+    function deleteRow(tableID)
+    {
+    	try
+    	{
+    		var table = document.getElementById(tableID);
+    		var rowCount = table.rows.length;
+    		for(var i=0; i<rowCount; i++)
+    		{
+    			var row = table.rows[i];
+    			var chkbox = row.cells[0].childNodes[0];
+    			if(null != chkbox && true == chkbox.checked)
+    			{
+    				table.deleteRow(i);
+    				rowCount--;
+    				i--;
+    			}
+    		}
+    	}
+    	catch(e)
+    	{
+    		alert(e);
+    	}
+    }
+
+    var globalLineItemsRowCount = <%= @order.line_items.length+1 %>;
+    function addRowToOrders(tableID)
+    {
+        var table    = document.getElementById(tableID);
+    	var rowCount = table.rows.length;
+    	var row      = table.insertRow(rowCount);
+
+        var cell1     = row.insertCell(0);
+    	var element1  = document.createElement("input");
+    	element1.type = "checkbox";
+    	cell1.appendChild(element1);
+
+    	var cell2       = row.insertCell(1);
+    	cell2.innerHTML = globalLineItemsRowCount; //rowCount + 1;
+
+        var cell3     = row.insertCell(2);
+        var element3  = document.createElement("input");
+        element3.type = "text";
+        element3.name = `order[line_items_attributes][${globalLineItemsRowCount-1}][item]`;
+        cell3.appendChild(element3);
+
+        var cell4     = row.insertCell(3);
+        var element4  = document.createElement("input");
+        element4.type = "text";
+        element4.name = `order[line_items_attributes][${globalLineItemsRowCount-1}][quantity]`;
+        cell4.appendChild(element4);
+
+        var cell5 = row.insertCell(4);
+        var div   = document.createElement("div");
+        div.classList.add("dropdown1");
+
+        var tf  = document.createElement("input");
+        tf.name = `order[line_items_attributes][${globalLineItemsRowCount-1}][gift_wrap_type]`;
+        tf.classList.add("input");
+        div.appendChild(tf);
+
+        var sel = document.createElement("select");
+        sel.classList.add("select");
+
+		var opt;
+        var gift_wrap_types = ["", "Plain Paper", "Color Paper"];
+		for (var i = 0; i<gift_wrap_types.length; i++) {
+	        opt = document.createElement("option");
+	        opt.text  = gift_wrap_types[i];
+	        sel.appendChild(opt);
+		}
+
+        sel.addEventListener("change", updateSelectValue);
+        div.appendChild(sel);
+        cell5.appendChild(div);
+
+        globalLineItemsRowCount++;
+
+    }
+</script>
+
+<%= form_for(@order) do |f| %>
+  <% if @order.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+      <ul>
+      <% @order.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table id="dataTableO" border="1">
+      <thead>
+          <tr>
+              <td colspan="2"></td>
+              <td>Item</td>
+              <td>Quantity </td>
+			  <td>Gift Wrap Style</td>
+          </tr>
+      </thead>
+      <tbody>
+		  <% counter = 1 %>
+          <%= f.fields_for :line_items do |l| %>
+              <tr>
+                  <td><input type="checkbox" name="chk"/></td>
+    			  <td> <%= counter %> </td>
+    			  <% counter += 1 %>
+                  <td> <%= l.text_field   :item %> </td>
+                  <td> <%= l.number_field :quantity %> </td>
+                  <td><div class="dropdown1">
+                          <%= l.text_field :gift_wrap_type %>
+                          <select  onchange="this.previousElementSibling.value = this.value;
+						          this.previousElementSibling.focus();">
+                              <option></option>
+    						  <option>Plain Paper</option>
+                              <option>Color Paper</option>
+                          </select>
+                      </div>
+              	</td>
+              </tr>
+          <% end %>
+      </tbody>
+  </table>
+  <input type="button" value="Add Row" onclick="addRowToOrders('dataTableO')" />
+  <input type="button" value="Delete Row" onclick="deleteRow('dataTableO')" />
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
