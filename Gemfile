@@ -76,3 +76,5 @@ end
 
 gem 'delayed'
 gem 'activerecord-import'
+
+gem 'jsbundling-rails'
