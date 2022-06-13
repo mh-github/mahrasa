@@ -1,0 +1,2 @@
+class AsyncOperation < ApplicationRecord
+end

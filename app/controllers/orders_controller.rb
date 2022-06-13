@@ -45,8 +45,8 @@ class OrdersController < ApplicationController
             if @order.update(order_params)
                 if order_params[:line_items_attributes] != nil
                     order_params[:line_items_attributes].each do |la|
-                        if la[1].length == 1 && la[1]['id'] != nil
-                            @order.line_items.destroy(la[1]['id'])
+                        if la[1].size == 1 && la[1][:id] != nil
+                            @order.line_items.destroy(la[1][:id])
                         end
                     end
                 end
@@ -64,7 +64,8 @@ class OrdersController < ApplicationController
     def destroy
         @order.destroy
         respond_to do |format|
-            format.html { redirect_to orders_url, notice: 'Order was successfully destroyed.' }
+            # format.html { redirect_to orders_url, notice: 'Order was successfully destroyed.' }
+            redirect_to root_path, status: :see_other
             format.json { head :no_content }
         end
     end
@@ -77,6 +78,6 @@ class OrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
-        params.require(:order).permit(:line_items_attributes => [:id, :item, :quantity, :gift_wrap_type])
+        params.require(:order).permit(:line_items_attributes => [:id, :item, :quantity, :gift_wrap_type]).to_h
     end
 end

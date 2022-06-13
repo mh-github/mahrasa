@@ -6,10 +6,15 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <%= yield %>
+  <!-- <body class="h-screen bg-gradient-to-b from-green-200 to-green-500"> -->
+  <body class="h-screen bg-gradient-to-b from-green-200 to-green-500">
+    <main>
+      <%= yield %>
+    </main>
   </body>
 </html>

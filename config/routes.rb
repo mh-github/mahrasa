@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'async_operations/index'
+  get 'async_operations/status'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -55,6 +57,11 @@ Rails.application.routes.draw do
   #   end
 
 
-  root 'site#index'
+  root 'home#index'
   resources :orders
+  get  'csv/upload' => 'csv#upload'
+  post 'csv/import' => 'csv#import'
+
+  get 'asyncops' => 'async_operations#index'
+  get 'asyncops/status/:id' => 'async_operations#status'
 end
