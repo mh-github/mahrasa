@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_20_112614) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_15_054447) do
   create_table "async_operations", force: :cascade do |t|
     t.string "op_type"
     t.string "filename"
@@ -45,6 +45,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_20_112614) do
   end
 
   create_table "orders", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "todos", force: :cascade do |t|
+    t.string "title"
+    t.boolean "complete", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -64,4 +64,13 @@ Rails.application.routes.draw do
 
   get 'asyncops' => 'async_operations#index'
   get 'asyncops/status/:id' => 'async_operations#status'
+
+  get 'todos', to: 'site#index'
+  get 'todos/new', to: 'site#index'
+  get 'todos/:id', to: 'site#index'
+  get 'todos/:id/edit', to: 'site#index'
+
+  namespace :api do
+    resources :todos, only: %i[index show create destroy update]
+  end
 end

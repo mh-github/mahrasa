@@ -127,15 +127,15 @@
         </tbody>
     </table>
 
-    <div class="flex items-center">
-    <button class="bg-blue-700 text-white font-bold" type="button" onclick="addRowToOrders('dataTableO')">
+    <div>
+    <button type="button" onclick="addRowToOrders('dataTableO')">
         Add Row
     </button>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <button class="bg-blue-700 text-white font-bold" type="button" onclick="deleteRow('dataTableO')">
+    <button type="button" onclick="deleteRow('dataTableO')">
         Delete Row
     </button>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <%= f.submit class: "bg-blue-700 text-white font-bold", value: "Create Order" %>
+    <%= f.submit value: "Create Order" %>
     </div>
 <% end %>
