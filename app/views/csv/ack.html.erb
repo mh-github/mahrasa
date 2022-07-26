@@ -1,4 +1,5 @@
-CSV file received.
-
-Your file <%= @filename %> has been received and will be processed.
-Please check the <a href="/asyncops/status/<%= @ao.id %>">link</a> for latest status.
+<div class="box-content md:box-content">
+    <div class="flex justify-center text-justify"><p>CSV file received.</p></div>
+    <div class="flex justify-center text-justify"><p>Your file <%= @filename %> has been received and will be processed.</p></div>
+    <div class="flex justify-center text-justify"><p>Please check the <a class="text-orange-600" href="/asyncops/status/<%= @ao.id %>">link</a> for latest status.</p></div>
+</div>

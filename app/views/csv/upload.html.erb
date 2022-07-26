@@ -1,5 +1,7 @@
   <h1>Upload CSV file</h1>
-  <%=form_tag csv_import_path, multipart: true do%>
-    <%=file_field_tag :csvfile%>
-    <%=submit_tag "Upload"%>
-  <%end%>
+  <div class="grid grid-cols-2 gap-3 md:grid-flow-col auto-cols-fr">
+    <%=form_tag csv_import_path, multipart: true, data: { turbo: false } do%>
+      <%=file_field_tag :csvfile%>
+      <%= button_to "Upload", "/csv/import" %>
+    <%end%>
+  </div>
